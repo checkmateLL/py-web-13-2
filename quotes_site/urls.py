@@ -23,10 +23,10 @@ from users import views as user_views
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('accounts/signup/', user_views.signup, name='signup'),
-    path('', views.quote_list, name='quote_list'),  # Home page showing quotes
+    path('', views.quote_list, name='quote_list'), 
     path('accounts/', include('users.urls')),
-    path('accounts/', include('django.contrib.auth.urls')), # Authentication-related URLs
-    path('quotes/', include('quotes.urls', namespace='quotes')),  # Quotes app URLs
+    path('accounts/', include('django.contrib.auth.urls')),
+    path('quotes/', include('quotes.urls', namespace='quotes')),
 ]
 
 

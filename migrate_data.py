@@ -4,16 +4,16 @@ import pymongo
 import sys
 import psycopg2
 
-# Explicitly set database connection for local development
+
 os.environ.update({
     'DJANGO_SETTINGS_MODULE': 'quotes_site.settings',
-    'DB_HOST': 'db',  # Connect to Docker's service name for PostgreSQL
-    'DB_PORT': '5432',  # The exposed port from docker-compose
+    'DB_HOST': 'db', 
+    'DB_PORT': '5432', 
 })
 
 django.setup()
 
-# Now you can import Django models
+
 from quotes.models import Author, Quote
 
 # MongoDB connection settings
@@ -27,9 +27,9 @@ def migrate_authors():
     count = 0
     for author_data in authors_collection.find():
         try:
-            # Use get_or_create to avoid duplications
+            
             author, created = Author.objects.get_or_create(
-                mongo_id=str(author_data['_id']),  # Use MongoDB _id as mongo_id
+                mongo_id=str(author_data['_id']),  
                 defaults={
                     'fullname': author_data['fullname'],
                     'born_date': author_data['born_date'],
@@ -38,7 +38,7 @@ def migrate_authors():
                 }
             )
             if not created:
-                # Assign the correct mongo_id for existing records if needed
+                
                 author.mongo_id = str(author_data['_id'])
                 author.save()
             count += 1 if created else 0
@@ -93,7 +93,7 @@ if __name__ == '__main__':
     try:
         print("Starting migration process...")
 
-        # Check database connection first
+        
         if not check_database_connection():
             sys.exit(1)
 

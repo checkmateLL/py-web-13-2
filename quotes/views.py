@@ -7,7 +7,7 @@ from django.db.models import Count
 
 def quote_list(request):
     quotes_list = Quote.objects.all()
-    paginator = Paginator(quotes_list, 10)  # Show 10 quotes per page
+    paginator = Paginator(quotes_list, 10) 
     page_number = request.GET.get('page')
     quotes = paginator.get_page(page_number)
     top_ten_tags = top_tags()
@@ -48,7 +48,7 @@ def search_quotes_by_tag(request, tag):
 def quotes_by_author(request, author_id):
     author = get_object_or_404(Author, id=author_id)
     quotes_list = Quote.objects.filter(author=author)
-    paginator = Paginator(quotes_list, len(quotes_list))  # Show all quotes by author
+    paginator = Paginator(quotes_list, len(quotes_list)) 
     page_number = request.GET.get('page')
     quotes = paginator.get_page(page_number)
     return render(request, 'quotes/quotes_by_author.html', {'author': author, 'quotes': quotes})
