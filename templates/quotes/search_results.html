@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Search Results for "{{ tag }}"</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <style>
+        body {
+            background: linear-gradient(to right, #f0f2f5, #c9d6ff);
+            font-family: Arial, sans-serif;
+            color: #333;
+        }
+        .container {
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+            margin-top: 50px;
+        }
+        h1 {
+            color: #0056b3;
+            text-align: center;
+            margin-bottom: 20px;
+        }
+        .list-group-item {
+            background: #f7f9fc;
+            border: none;
+            padding: 15px;
+            margin-bottom: 10px;
+            border-radius: 5px;
+            box-shadow: 0 0 10px rgba(0, 0, 0, 0.05);
+        }
+        .btn-secondary {
+            border: none;
+            transition: background-color 0.3s;
+        }
+        .btn-secondary:hover {
+            background-color: #5a6268;
+        }
+        .pagination {
+            justify-content: center;
+            margin-top: 20px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Quotes tagged with "{{ tag }}"</h1>
+        <ul class="list-group">
+            {% for quote in quotes %}
+                <li class="list-group-item">
+                    {{ quote.quote }} - <a href="{% url 'quotes:quotes_by_author' author_id=quote.author.id %}">{{ quote.author.fullname }}</a>
+                </li>
+            {% endfor %}
+        </ul>
+
+        <div class="pagination mt-3">
+            <span class="step-links">
+                {% if quotes.has_previous %}
+                    <a href="?page=1" class="btn btn-outline-primary">&laquo; first</a>
+                    <a href="?page={{ quotes.previous_page_number }}" class="btn btn-outline-primary">previous</a>
+                {% endif %}
+
+                <span class="current">
+                    Page {{ quotes.number }} of {{ quotes.paginator.num_pages }}.
+                </span>
+
+                {% if quotes.has_next %}
+                    <a href="?page={{ quotes.next_page_number }}" class="btn btn-outline-primary">next</a>
+                    <a href="?page={{ quotes.paginator.num_pages }}" class="btn btn-outline-primary">last &raquo;</a>
+                {% endif %}
+            </span>
+        </div>
+
+        <a href="{% url 'quotes:quote_list' %}" class="btn btn-secondary mt-3">Back to Quotes</a>
+    </div>
+</body>
+</html>
