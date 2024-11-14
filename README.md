@@ -3,6 +3,7 @@ Docker running web app and postgre
 
 
 Tables in the database
+
 ![image](https://github.com/user-attachments/assets/3eb95b79-ccfd-44a4-9f29-d78530f01d43)
 
 
